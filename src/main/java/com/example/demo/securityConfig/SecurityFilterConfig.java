@@ -20,18 +20,14 @@ public class SecurityFilterConfig {
     private JwtAuthenticationFilter filter;
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
-    	
-    	System.out.println("----------------------------------"+security);
-    	
+    public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
         return security.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/authenticate").permitAll()
-                .anyRequest()
-                .authenticated())
+                .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterAt((Filter) filter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }

@@ -13,11 +13,12 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class SpringSecurityConfig {
     @Bean
- 	public PasswordEncoder passwordencoder() {
+ 	 PasswordEncoder passwordencoder() {
 		return new BCryptPasswordEncoder();
 	}
+    
     @Bean
-	public UserDetailsService userDetailsService() {
+	 UserDetailsService userDetailsService() {
 		
 		UserDetails adminUser=org.springframework.security.core.userdetails.User.builder().username("admin").password(this.passwordencoder().encode("user")).roles("ADMIN").build();
 		UserDetails normalUser=org.springframework.security.core.userdetails.User.builder().username("user").password(this.passwordencoder().encode("user")).roles("NORMAL").build();
@@ -25,7 +26,7 @@ public class SpringSecurityConfig {
 	}
 	
     @Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+	 AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
 		return configuration.getAuthenticationManager();
 	}
 	

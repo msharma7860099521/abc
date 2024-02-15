@@ -15,21 +15,11 @@ import jakarta.servlet.http.HttpServletResponse;
 //Class is going to override the method commence
 
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
-
-	@Override
-	public void commence(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException authException) throws IOException, ServletException {
-		
-		
-		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		PrintWriter writer=response.getWriter();
-		writer.println("Access Denied  "+authException.getMessage());
-		
-		
-	}
-	
-	
-	
-
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        PrintWriter writer = response.getWriter();
+        writer.println("Access Denied !! Message :" + authException.getMessage());
+    }
 }

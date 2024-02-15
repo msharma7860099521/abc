@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.CustomException.BussinessException;
@@ -13,6 +16,11 @@ public class StudentService {
 	@Autowired
 	StudentRepository studentRepository;
 
+	
+	@Autowired
+	PasswordEncoder encoder;
+	
+	
 	public Student saveStudent(Student student) {
 		
 	Student saveStudent=studentRepository.save(student);
@@ -21,22 +29,22 @@ public class StudentService {
 	}
 
 	public Student getStudentById(int student_id) {
-		Student student=null;
-		
-		if(student_id==0) {
-			throw new BussinessException(600,"please provide student Id");
+		Student student = null;
+		Optional<Student> e = studentRepository.findById(student_id);
+
+		if (e.isPresent()) {
+
+			return e.get();
+		} else {
+
+			throw new BussinessException(6011, "sorry student with given id not present.");
+
 		}
-		
-		try {
-		    student=studentRepository.findById(student_id).get();
-		} catch (Exception e) {
-			
-			throw new BussinessException(601,e.getMessage());
-		}
-		
-		return student;
+
 	}
 
+	
+	
 	
 
 }
